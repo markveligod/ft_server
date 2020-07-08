@@ -1,12 +1,24 @@
-# This Dockerfile is used for a youtube tutorial
-# base image - nginx with tag "latest"
-FROM nginx:latest
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ckakuna <ckakuna@student.21-school.ru>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/07/08 22:02:11 by ckakuna           #+#    #+#              #
+#    Updated: 2020/07/08 22:14:34 by ckakuna          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-# Adding custom index.html hosted on Github Gist
-ADD https://gist.githubusercontent.com/ProProgrammer/72a87394affb0a70f54af6e6353e3c45/raw/37fcecc6d43dba55effa9e1fa6f7183f349b9ba0/index.html /usr/share/nginx/html/
-
-# Adding read permissions to custom index.html
-RUN chmod +r /usr/share/nginx/html/index.html
-
-# 'nginx -g daemon off" will run as default command when any container is run that uses the image that was built using this Dockerfile"
-CMD ["nginx", "-g", "daemon off;"]
+FROM debian:buster
+MAINTAINER ckakuna <ckakuna@student.21-school.ru>
+RUN apt-get update && apt-get upgrade
+RUN apt-get install -y nginx default-mysql-server php php-fpm php-mysql openssl wget
+RUN service nginx start && service mysql start && service php7.3-fpm start
+COPY ./srcs/init_settings.sh ./
+COPY ./srcs/default ./
+COPY ./srcs/ssl.txt ./
+COPY ./srcs/wp-config.php /var
+EXPOSE 80
+EXPOSE 443
+ENTRYPOINT ["bash", "./init_settings.sh"]
