@@ -1,34 +1,24 @@
 server {
-	# Nginx configuration
 	listen 80;
 	listen [::]:80;
 	server_name localhost;
 
-	# SSL configuration	
 	listen 443 ssl;
 	listen [::]:443 ssl;
 
 	root /var/www;
 
-	# Add index.php to the list if you are using PHP
-	index index.php index.html index.htm index.nginx-debian.html;
+	index index.php index.html index.htm index.nginx-debian.html main.html;
 
 	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
   	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
-	server_name localhost;
 	location / {
-		autoindex on;
+		autoindex off;
 		#try_files $uri $uri/ =404;
 	}
-	
-	# pass PHP scripts to FastCGI server
-	# pass PHP scripts to FastCGI server
-	#
 	location ~ \.php$ {
 		include snippets/fastcgi-php.conf;
-	#	# With php-fpm (or other unix sockets):
 		fastcgi_pass unix:/run/php/php7.3-fpm.sock;
 	}
-
 }

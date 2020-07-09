@@ -5,20 +5,27 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ckakuna <ckakuna@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/07/08 22:02:11 by ckakuna           #+#    #+#              #
-#    Updated: 2020/07/08 22:14:34 by ckakuna          ###   ########.fr        #
+#    Created: 2020/07/09 12:18:37 by ckakuna           #+#    #+#              #
+#    Updated: 2020/07/09 13:00:07 by ckakuna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM debian:buster
+
 MAINTAINER ckakuna <ckakuna@student.21-school.ru>
+
 RUN apt-get update && apt-get upgrade
-RUN apt-get install -y nginx default-mysql-server php php-fpm php-mysql openssl wget
+RUN apt-get install -y default-mysql-server nginx php php-fpm php-mysql openssl wget vim
+
 RUN service nginx start && service mysql start && service php7.3-fpm start
-COPY ./srcs/init_settings.sh ./
-COPY ./srcs/default ./
-COPY ./srcs/ssl.txt ./
+
+COPY ./srcs/start.sh /etc
+COPY ./srcs/default /etc
+COPY ./srcs/ssl.txt /etc
 COPY ./srcs/wp-config.php /var
+COPY ./srcs/main.html /var/www
+
 EXPOSE 80
 EXPOSE 443
-ENTRYPOINT ["bash", "./init_settings.sh"]
+
+ENTRYPOINT ["bash", "/etc/start.sh"]
