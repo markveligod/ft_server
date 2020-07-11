@@ -38,6 +38,10 @@ Open managed software center and download Docker Toolbox
 * To run `bash start.sh`  
   
 ![](https://github.com/markveligod/ft_server/raw/master/img/4.png)  
+![](https://github.com/markveligod/ft_server/raw/master/img/5.png)  
+![](https://github.com/markveligod/ft_server/raw/master/img/6.png)  
+![](https://github.com/markveligod/ft_server/raw/master/img/7.png)  
+![](https://github.com/markveligod/ft_server/raw/master/img/8.png)  
 P.s. This project was made and tested under Ubuntu 20.04.  
 For Mac OS I recommend replacing in `main.html` the line `localhost` to the IP address allocated by Docker toolbox.  
   
